@@ -1,6 +1,6 @@
 /**
-*	@author
-*	@date
+*	@author Giovanni Artavia
+*	@date 08/30/17
 *	@file LinkedList.hpp
 *	@brief Implementation file for templated LinkedList class
 */
@@ -23,11 +23,12 @@ LinkedList<T>::~LinkedList()
 template <typename T>
 bool LinkedList<T>::isEmpty() const
 {
-	//return(m_size == 0);
-	if (m_front == nullptr){
+	if (m_front == nullptr)
+	{
 		return true;
 	}
-	else{
+	else
+	{
 		return false;
 	}
 }
@@ -117,9 +118,11 @@ bool LinkedList<T>::removeBack()
 
 	if (!isEmpty())
 	{
-		if (lastNode == nullptr) //if there is only one node then delete it.
+		if (lastNode->getNext() == nullptr) //if there is only one node, delete it.
 		{
 			delete(lastNode);
+			lastNode = nullptr;
+			m_front = nullptr;
 			m_size --;
 			isRemoved = true;
 		}
@@ -128,14 +131,15 @@ bool LinkedList<T>::removeBack()
 			while (lastNode->getNext() != nullptr) //move both temp pointers to second to last node
 			{
 					lastNode = lastNode->getNext();
-					secondintoLast = secondintoLast->getNext();
+					if (lastNode->getNext() != nullptr)
+					{
+						secondintoLast = secondintoLast-> getNext();
+					}
 			}
 
-			lastNode = lastNode->getNext(); //lastNode points to final node
 			delete(lastNode);
 			lastNode = nullptr;
-			secondintoLast = secondintoLast->getNext();
-			secondintoLast = nullptr;
+			secondintoLast->setNext(nullptr);
 			m_size --;
 			isRemoved = true;
 		}
